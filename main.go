@@ -30,6 +30,7 @@ func getEvents(context *gin.Context) {
 func createEvent(context *gin.Context) {
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
+
 	if err != nil {
 		context.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -37,6 +38,13 @@ func createEvent(context *gin.Context) {
 
 	event.Id = 1
 	event.UserId = 1
+
+	err := event.Save()
+
+	if err != nil {
+		context.JSON(500, gin.H{"error": "Could not save event"})
+		return
+	}
 
 	context.JSON(201, gin.H{"message": "event created", "data": event})
 }
