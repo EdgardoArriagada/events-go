@@ -13,7 +13,11 @@ func main() {
 	server.GET("/events", getEvents)
 	server.POST("/events", createEvent)
 
-	server.Run(":8080")
+	err := server.Run(":8080")
+
+	if err != nil {
+		panic(err)
+	}
 }
 
 func getEvents(context *gin.Context) {
@@ -39,7 +43,7 @@ func createEvent(context *gin.Context) {
 	event.Id = 1
 	event.UserId = 1
 
-	err := event.Save()
+	err = event.Save()
 
 	if err != nil {
 		context.JSON(500, gin.H{"error": "Could not save event"})
