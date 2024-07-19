@@ -1,7 +1,7 @@
 package db
 
 import (
-	"database/sql"
+	"database/sql" // <- from go standard lib
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -16,6 +16,8 @@ func InitDB() {
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
+
+	createTables()
 }
 
 func createTables() {
@@ -26,7 +28,7 @@ func createTables() {
     description TEXT NOT NULL,
     location TEXT NOT NULL,
     dateTime DATETIME NOT NULL,
-    user_id INTEGER,
+    user_id INTEGER
   )`,
 	)
 
