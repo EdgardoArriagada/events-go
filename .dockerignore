@@ -1,3 +1,6 @@
 main
 Dockerfile
+docker-compose.yaml
+app/tmp
+app/db
 .git
