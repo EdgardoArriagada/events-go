@@ -7,8 +7,8 @@ import (
 
 var DB *sql.DB
 
-func getDbConnection() *sql.DB {
-	db, err := sql.Open("sqlite3", "data/db/api.db")
+func getDbConnection(driverName string, dataSourceName string) *sql.DB {
+	db, err := sql.Open(driverName, dataSourceName)
 
 	if err != nil {
 		panic("Could not connect to database.")
@@ -18,7 +18,7 @@ func getDbConnection() *sql.DB {
 }
 
 func InitDB() {
-	DB = getDbConnection()
+	DB = getDbConnection("sqlite3", "data/db/api.db")
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
