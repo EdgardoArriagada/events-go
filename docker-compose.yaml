@@ -1,9 +1,14 @@
 version: "3.8"
 services:
   backend:
-    build: ./
+    build: .
     ports:
       - 80:8080
     volumes:
-      - ./:/app
+      - .:/app
       - /app/tmp
+      - /app/data
+      - data:/app/data/db
+
+volumes:
+  data:
