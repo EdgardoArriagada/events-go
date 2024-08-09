@@ -7,13 +7,18 @@ import (
 
 var DB *sql.DB
 
-func InitDB() {
+func getDbConnection() *sql.DB {
 	db, err := sql.Open("sqlite3", "data/db/api.db")
-	DB = db
 
 	if err != nil {
 		panic("Could not connect to database.")
 	}
+
+	return db
+}
+
+func InitDB() {
+	DB = getDbConnection()
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
