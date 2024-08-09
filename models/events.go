@@ -17,11 +17,10 @@ type Event struct {
 var events = []Event{}
 
 func (e *Event) Save() error {
-	query := `
-  INSERT INTO events (name, description, location, date_time, user_id)
-  VALUES (?, ?, ?, ?, ?)
-  `
-	stmt, err := db.DB.Prepare(query)
+	stmt, err := db.DB.Prepare(`
+    INSERT INTO events (name, description, location, date_time, user_id) 
+    VALUES (?, ?, ?, ?, ?)
+  `)
 
 	if err != nil {
 		return err
@@ -41,9 +40,8 @@ func (e *Event) Save() error {
 }
 
 func GetAllEvents() ([]Event, error) {
-	query := "SELECT * FROM events"
 	// this query is not prepared because its easier for the engine
-	rows, err := db.DB.Query(query)
+	rows, err := db.DB.Query("SELECT * FROM events")
 	if err != nil {
 		return nil, err
 	}
