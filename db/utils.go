@@ -12,7 +12,6 @@ func dbExec(query string) {
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func getDbConnection(driverName string, dataSourceName string) {
