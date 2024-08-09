@@ -8,10 +8,11 @@ import (
 var DB *sql.DB
 
 func InitDB() {
-	DB, err := sql.Open("sqlite3", "api.db")
+	db, err := sql.Open("sqlite3", "data/db/api.db")
+	DB = db
 
 	if err != nil {
-		panic("Could not connect to databas.")
+		panic("Could not connect to database.")
 	}
 
 	DB.SetMaxOpenConns(10)
