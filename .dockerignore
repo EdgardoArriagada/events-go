@@ -3,4 +3,6 @@ Dockerfile
 docker-compose.yaml
 app/tmp
 app/db
+README.md
+.gitignore
 .git
