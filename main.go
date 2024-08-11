@@ -12,10 +12,7 @@ func main() {
 
 	server.GET("/events", getEvents)
 	server.POST("/events", createEvent)
-
-	server.GET("/", func(context *gin.Context) {
-		context.JSON(200, gin.H{"message": "Hello World!"})
-	})
+	server.GET("/health", healthCheck)
 
 	err := server.Run(":8080")
 
@@ -55,4 +52,9 @@ func createEvent(context *gin.Context) {
 	}
 
 	context.JSON(201, gin.H{"message": "event created", "data": event})
+}
+
+func healthCheck(context *gin.Context) {
+	context.JSON(200, gin.H{"status": "ok"})
+	return
 }
