@@ -25,23 +25,23 @@ func main() {
 	}
 }
 
-func getEvents(context *gin.Context) {
+func getEvents(c *gin.Context) {
 	events, err := models.GetAllEvents()
 
 	if err != nil {
-		context.JSON(500, gin.H{"error": "Could not get events"})
+		c.JSON(500, gin.H{"error": "Could not get events"})
 		return
 	}
 
-	context.JSON(200, events)
+	c.JSON(200, events)
 }
 
-func createEvent(context *gin.Context) {
+func createEvent(c *gin.Context) {
 	var event models.Event
-	err := context.ShouldBindJSON(&event)
+	err := c.ShouldBindJSON(&event)
 
 	if err != nil {
-		context.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -51,29 +51,29 @@ func createEvent(context *gin.Context) {
 	err = event.Save()
 
 	if err != nil {
-		context.JSON(500, gin.H{"error": "Could not save event"})
+		c.JSON(500, gin.H{"error": "Could not save event"})
 		return
 	}
 
-	context.JSON(201, gin.H{"message": "event created", "data": event})
+	c.JSON(201, gin.H{"message": "event created", "data": event})
 }
 
-func getEvent(context *gin.Context) {
-	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
+func getEvent(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		context.JSON(400, gin.H{"error": "Invalid id"})
+		c.JSON(400, gin.H{"error": "Invalid id"})
 		return
 	}
 
 	event, err := models.GetEventById(id)
 	if err != nil {
-		context.JSON(500, gin.H{"error": "Could not get event"})
+		c.JSON(500, gin.H{"error": "Could not get event"})
 		return
 	}
 
-	context.JSON(200, event)
+	c.JSON(200, event)
 }
 
-func healthCheck(context *gin.Context) {
-	context.JSON(200, gin.H{"status": "ok"})
+func healthCheck(c *gin.Context) {
+	c.JSON(200, gin.H{"status": "ok"})
 }
