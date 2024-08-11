@@ -59,3 +59,35 @@ func getEvent(c *gin.Context) {
 func healthCheck(c *gin.Context) {
 	c.JSON(200, gin.H{"status": "ok"})
 }
+
+func updateEvent(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "Invalid id"})
+		return
+	}
+
+	_, err = models.GetEventById(id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not get event"})
+		return
+	}
+
+	var updatedEvent models.Event
+
+	err = c.ShouldBindJSON(&updatedEvent)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	updatedEvent.Id = id
+
+	err = updatedEvent.Update()
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not update event"})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "Event updated", "data": updatedEvent})
+}
