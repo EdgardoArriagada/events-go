@@ -7,7 +7,6 @@ services:
     volumes:
       - .:/app
       - /app/tmp
-      - /app/data
       - data:/app/data/db
     stdin_open: true
     tty: true
