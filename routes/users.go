@@ -42,7 +42,6 @@ func login(c *gin.Context) {
 }
 
 func getUsers(c *gin.Context) {
-
 	users, err := models.GetAllUsers()
 
 	if err != nil {
