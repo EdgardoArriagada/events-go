@@ -40,3 +40,15 @@ func login(c *gin.Context) {
 
 	c.JSON(200, gin.H{"message": "Login Successful."})
 }
+
+func getUsers(c *gin.Context) {
+
+	users, err := models.GetAllUsers()
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not get users"})
+		return
+	}
+
+	c.JSON(200, users)
+}
