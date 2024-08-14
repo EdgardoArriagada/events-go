@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"strconv"
+
 	"example.com/events-go/models"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func getEvents(c *gin.Context) {

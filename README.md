@@ -18,4 +18,10 @@ curl -X PUT localhost/events/1  -d '{ "name": "cuando despiertes un dia (editado
 
 # create user
 curl -X POST localhost/signup -d '{"email": "test@example.com", "password": "trustno1"}' -H "Content-Type: application/json" -H "accept: application/json" | jq
+
+# delete user
+curl -X DELETE localhost/events/1 | jq
+
+# login user
+curl -X POST localhost/login -d '{"email": "test@example.com", "password": "trustno1"}' -H "Content-Type: application/json" -H "accept: application/json" | jq
 ```

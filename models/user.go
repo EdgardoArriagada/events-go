@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"example.com/events-go/db"
 	"example.com/events-go/utils"
 )
@@ -37,4 +38,23 @@ func (u *User) Save() error {
 	u.Id = id
 
 	return err
+}
+
+func (u *User) ValidateCredentials() error {
+	row := db.DB.QueryRow("SELECT email, password FROM users WHERE email = ?", u.Email)
+
+	var retrievePassword string
+
+	err := row.Scan(&retrievePassword)
+	if err != nil {
+		return errors.New("Invalid password")
+	}
+
+	isPasswordValid := utils.CheckPasswordHash(u.Password, retrievePassword)
+
+	if !isPasswordValid {
+		return errors.New("Invalid password")
+	}
+
+	return nil
 }
