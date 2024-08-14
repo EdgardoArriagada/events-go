@@ -1,10 +1,9 @@
 package routes
 
 import (
-	"strconv"
-
 	"example.com/events-go/models"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func getEvents(c *gin.Context) {
@@ -90,4 +89,26 @@ func updateEvent(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"message": "Event updated", "data": updatedEvent})
+}
+
+func deleteEvent(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "Invalid id"})
+		return
+	}
+
+	event, err := models.GetEventById(id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not get event"})
+		return
+	}
+
+	err = event.Delete()
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not delete event"})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "Event deleted", "data": event})
 }
