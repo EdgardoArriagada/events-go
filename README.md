@@ -28,8 +28,9 @@ curl -X PUT localhost/events/1  -d '{ "name": "cuando despiertes un dia (editado
 # delete event
 curl -X DELETE localhost/events/1 -H "Authorization: $EVENTS_GO_JWT" | jq
 
+# register for an event
+curl -X POST localhost/events/1/register -H "Authorization: $EVENTS_GO_JWT" | jq
+
 # create user
 curl -X POST localhost/signup -d '{"email": "test@example.com", "password": "trustno1"}' -H "Content-Type: application/json" -H "accept: application/json" | jq
-
-
 ```
