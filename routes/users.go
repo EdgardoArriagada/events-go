@@ -2,6 +2,7 @@ package routes
 
 import (
 	"example.com/events-go/models"
+	"example.com/events-go/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,7 +39,13 @@ func login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"message": "Login Successful."})
+	jwt, err := utils.GenerateJWT(user.Email, user.Id)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Could not generate JWT."})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "Login Successful.", "jwt": jwt})
 }
 
 func getUsers(c *gin.Context) {
