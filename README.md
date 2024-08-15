@@ -26,7 +26,7 @@ curl -X POST localhost/events -d '{ "name": "test event", "description": "a test
 curl -X PUT localhost/events/1  -d '{ "name": "cuando despiertes un dia (editado)", "description": "a test event 2", "location": "teatro caupolican", "dateTime": "2024-01-01T15:30:00.000Z"}' -H 'accept: application/json' -H 'Content-Type: application/json' -H "Authorization: $EVENTS_GO_JWT" | jq
 
 # delete event
-curl -X DELETE localhost/events/1 | jq
+curl -X DELETE localhost/events/1 -H "Authorization: $EVENTS_GO_JWT" | jq
 
 # create user
 curl -X POST localhost/signup -d '{"email": "test@example.com", "password": "trustno1"}' -H "Content-Type: application/json" -H "accept: application/json" | jq
