@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"example.com/events-go/models"
-	"example.com/events-go/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,20 +19,10 @@ func getEvents(c *gin.Context) {
 }
 
 func createEvent(c *gin.Context) {
-	token := c.Request.Header.Get("Authorization")
-	if token == "" {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	userId, err := utils.VerifyToken(token)
-	if err != nil {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
 
 	var event models.Event
-	err = c.ShouldBindJSON(&event)
+	userId := c.GetInt64("userId")
+	err := c.ShouldBindJSON(&event)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
