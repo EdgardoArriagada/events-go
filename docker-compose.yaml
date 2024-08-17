@@ -1,5 +1,16 @@
 version: "3.8"
 services:
+  db:
+    image: postgres:13.16
+    restart: always
+    environment:
+      POSTGRES_DB: my_database
+      POSTGRES_USER: my_user
+      POSTGRES_PASSWORD: my_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
   backend:
     build: .
     ports:
@@ -13,3 +24,4 @@ services:
 
 volumes:
   data:
+  pgdata:
