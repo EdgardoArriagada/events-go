@@ -7,6 +7,7 @@ services:
       POSTGRES_DB: my_database
       POSTGRES_USER: my_user
       POSTGRES_PASSWORD: my_password
+      # connect using: postgresql://my_user:my_password@localhost:5432/postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
